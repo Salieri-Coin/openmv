@@ -1292,9 +1292,9 @@ static int set_hmirror(sensor_t *sensor, int enable) {
     uint8_t reg;
     int ret = omv_i2c_readb2(&sensor->i2c_bus, sensor->slv_addr, TIMING_TC_REG_21, &reg);
     if (enable) {
-        ret |= omv_i2c_writeb2(&sensor->i2c_bus, sensor->slv_addr, TIMING_TC_REG_21, reg | 0x06);
-    } else {
         ret |= omv_i2c_writeb2(&sensor->i2c_bus, sensor->slv_addr, TIMING_TC_REG_21, reg & 0xF9);
+    } else {
+        ret |= omv_i2c_writeb2(&sensor->i2c_bus, sensor->slv_addr, TIMING_TC_REG_21, reg | 0x06);
     }
     return ret;
 }
@@ -1303,9 +1303,9 @@ static int set_vflip(sensor_t *sensor, int enable) {
     uint8_t reg;
     int ret = omv_i2c_readb2(&sensor->i2c_bus, sensor->slv_addr, TIMING_TC_REG_20, &reg);
     if (!enable) {
-        ret |= omv_i2c_writeb2(&sensor->i2c_bus, sensor->slv_addr, TIMING_TC_REG_20, reg | 0x06);
-    } else {
         ret |= omv_i2c_writeb2(&sensor->i2c_bus, sensor->slv_addr, TIMING_TC_REG_20, reg & 0xF9);
+    } else {
+        ret |= omv_i2c_writeb2(&sensor->i2c_bus, sensor->slv_addr, TIMING_TC_REG_20, reg | 0x06);
     }
     return ret;
 }
