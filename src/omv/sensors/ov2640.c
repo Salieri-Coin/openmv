@@ -804,9 +804,9 @@ static int set_hmirror(sensor_t *sensor, int enable) {
 
     if (!enable) {
         // Already mirrored.
-        reg |= REG04_HFLIP_IMG;
-    } else {
         reg &= ~REG04_HFLIP_IMG;
+    } else {
+        reg |= REG04_HFLIP_IMG;
     }
 
     return omv_i2c_writeb(&sensor->i2c_bus, sensor->slv_addr, REG04, reg) | ret;
@@ -819,9 +819,9 @@ static int set_vflip(sensor_t *sensor, int enable) {
 
     if (!enable) {
         // Already flipped.
-        reg |= REG04_VFLIP_IMG | REG04_VREF_EN;
-    } else {
         reg &= ~(REG04_VFLIP_IMG | REG04_VREF_EN);
+    } else {
+        reg |= REG04_VFLIP_IMG | REG04_VREF_EN;
     }
 
     return omv_i2c_writeb(&sensor->i2c_bus, sensor->slv_addr, REG04, reg) | ret;
