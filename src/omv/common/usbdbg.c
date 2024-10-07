@@ -203,7 +203,7 @@ void usbdbg_data_in(uint32_t size, usbdbg_write_callback_t write_callback) {
                 *((unsigned int *) (OMV_BOARD_UID_ADDR + OMV_BOARD_UID_OFFSET * 0)),
             };
             snprintf((char *) buffer, 64, "%s [%s:%08X%08X%08X]",
-                     OMV_BOARD_ARCH, OMV_BOARD_TYPE, uid[0], uid[1], uid[2]);
+                     OMV_BOARD_ARCH, "M4", uid[0], uid[1], uid[2]);
             cmd = USBDBG_NONE;
             write_callback(&buffer, sizeof(buffer));
             break;
