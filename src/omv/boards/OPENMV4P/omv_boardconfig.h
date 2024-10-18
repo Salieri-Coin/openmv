@@ -140,12 +140,14 @@
 // Memory map.
 #define OMV_FLASH_ORIGIN                      0x08000000
 #define OMV_FLASH_LENGTH                      2048K
+#define OMV_DTCM_ORIGIN                       0x20000000 // Note accessible by CPU and MDMA only.
+#define OMV_DTCM_LENGTH                       128K
 #define OMV_ITCM_ORIGIN                       0x00000000
 #define OMV_ITCM_LENGTH                       64K
-#define OMV_SRAM1_ORIGIN                      0x20000000
-#define OMV_SRAM1_LENGTH                      408K  // 280K + 128K
-#define OMV_SRAM2_ORIGIN                      0x30046000
-#define OMV_SRAM2_LENGTH                      8K
+#define OMV_SRAM1_ORIGIN                      0x30000000
+#define OMV_SRAM1_LENGTH                      284K
+#define OMV_SRAM2_ORIGIN                      0x30047000
+#define OMV_SRAM2_LENGTH                      4K
 #define OMV_SRAM4_ORIGIN                      0x38000000
 #define OMV_SRAM4_LENGTH                      64K
 #define OMV_AXI_SRAM_ORIGIN                   0x24000000
