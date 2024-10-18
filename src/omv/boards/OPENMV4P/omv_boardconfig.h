@@ -22,7 +22,7 @@
 #define OMV_JPEG_CODEC_ENABLE                 (1)
 #define OMV_JPEG_QUALITY_LOW                  (50)
 #define OMV_JPEG_QUALITY_HIGH                 (90)
-#define OMV_JPEG_QUALITY_THRESHOLD            (1920 * 1080 * 2)
+#define OMV_JPEG_QUALITY_THRESHOLD            (320 * 240 * 2)
 
 // GPU Configuration
 #define OMV_GPU_ENABLE                        (1)
@@ -64,8 +64,7 @@
 #define OMV_WIFIDBG_ENABLE                    (1)
 
 // UMM heap block size
-#define OMV_UMM_BLOCK_SIZE                    256
-
+#define OMV_UMM_BLOCK_SIZE                    16
 // USB IRQn.
 #define OMV_USB_IRQN                          (OTG_FS_IRQn)
 
@@ -119,30 +118,24 @@
 // Linker script constants (see the linker script template stm32fxxx.ld.S).
 // Note: fb_alloc is a stack-based, dynamically allocated memory on FB.
 // The maximum available fb_alloc memory = FB_ALLOC_SIZE + FB_SIZE - (w*h*bpp).
-#define OMV_MAIN_MEMORY                       SRAM1  // Data/BSS memory
-#define OMV_STACK_MEMORY                      ITCM   // stack memory
+#define OMV_MAIN_MEMORY                       SRAM1 // Data/BSS memory
+#define OMV_STACK_MEMORY                      ITCM  // stack memory
 #define OMV_STACK_SIZE                        (64K)
-#define OMV_FB_MEMORY                         DRAM   // Framebuffer, fb_alloc
-#define OMV_FB_SIZE                           (16M)  // FB memory: header + VGA/GS image
-#define OMV_FB_ALLOC_SIZE                     (11M)  // minimum fb alloc size
-#define OMV_FB_OVERLAY_MEMORY                 AXI_SRAM  // Fast fb_alloc memory.
-#define OMV_FB_OVERLAY_SIZE                   (496K) // Fast fb_alloc memory size.
-#define OMV_JPEG_MEMORY                       DRAM   // JPEG buffer memory buffer.
-#define OMV_JPEG_SIZE                         (1M)   // IDE JPEG buffer (header + data).
-#define OMV_VOSPI_MEMORY                      SRAM4  // VoSPI buffer memory.
+#define OMV_FB_MEMORY                         AXI_SRAM  // Framebuffer, fb_alloc
+#define OMV_FB_SIZE                           (400K)    // FB memory: header + VGA/GS image
+#define OMV_FB_ALLOC_SIZE                     (80K)     // minimum fb alloc size
+#define OMV_JPEG_MEMORY                       AXI_SRAM  // JPEG buffer memory.
+#define OMV_JPEG_SIZE                         (32K) // IDE JPEG buffer (header + data).
+#define OMV_VOSPI_MEMORY                      SRAM4 // VoSPI buffer memory.
 #define OMV_VOSPI_SIZE                        (38K)
-#define OMV_DMA_MEMORY                        SRAM3  // Misc DMA buffers memory.
-#define OMV_DMA_MEMORY_D1                     AXI_SRAM // Domain 1 DMA buffers.
-#define OMV_DMA_MEMORY_D2                     SRAM3  // Domain 2 DMA buffers.
-#define OMV_DMA_MEMORY_D3                     SRAM4  // Domain 3 DMA buffers.
-#define OMV_GC_BLOCK0_MEMORY                  SRAM1  // Main GC block
-#define OMV_GC_BLOCK0_SIZE                    (239K)
-#define OMV_GC_BLOCK1_MEMORY                  DRAM   // Extra GC block 0.
-#define OMV_GC_BLOCK1_SIZE                    (4M)
-#define OMV_MSC_BUF_SIZE                      (2K)   // USB MSC bot data
-#define OMV_VFS_BUF_SIZE                      (1K)   // VFS struct + FATFS file buffer (624 bytes)
-#define OMV_SDRAM_SIZE                        (32 * 1024 * 1024) // This needs to be here for UVC firmware.
-#define OMV_LINE_BUF_SIZE                     (11 * 1024) // Image line buffer round(2592 * 2BPP * 2 buffers).
+#define OMV_DMA_MEMORY                        SRAM2 // Misc DMA buffers memory.
+#define OMV_GC_BLOCK0_MEMORY                  SRAM4 // Main GC block.
+#define OMV_GC_BLOCK0_SIZE                    (26K)
+#define OMV_GC_BLOCK1_MEMORY                  SRAM1 // Extra GC block 0.
+#define OMV_GC_BLOCK1_SIZE                    (267K)
+#define OMV_MSC_BUF_SIZE                      (2K)  // USB MSC bot data
+#define OMV_VFS_BUF_SIZE                      (1K)  // VFS struct + FATFS file buffer (624 bytes)
+#define OMV_LINE_BUF_SIZE                     (3 * 1024) // Image line buffer round(640 * 2BPP * 2 buffers).
 
 // Memory map.
 #define OMV_FLASH_ORIGIN                      0x08000000
@@ -152,15 +145,13 @@
 #define OMV_ITCM_ORIGIN                       0x00000000
 #define OMV_ITCM_LENGTH                       64K
 #define OMV_SRAM1_ORIGIN                      0x30000000
-#define OMV_SRAM1_LENGTH                      256K // SRAM1 + SRAM2 + 1/2 SRAM3
-#define OMV_SRAM3_ORIGIN                      0x30040000
-#define OMV_SRAM3_LENGTH                      32K
+#define OMV_SRAM1_LENGTH                      280K
+#define OMV_SRAM2_ORIGIN                      0x30046000
+#define OMV_SRAM2_LENGTH                      8K
 #define OMV_SRAM4_ORIGIN                      0x38000000
 #define OMV_SRAM4_LENGTH                      64K
 #define OMV_AXI_SRAM_ORIGIN                   0x24000000
 #define OMV_AXI_SRAM_LENGTH                   512K
-#define OMV_DRAM_ORIGIN                       0xC0000000
-#define OMV_DRAM_LENGTH                       32M
 
 // Flash configuration.
 #define OMV_FLASH_FFS_ORIGIN                  0x08020000
@@ -277,7 +268,6 @@
 #define OMV_SPI_DISPLAY_RS_PIN                (&omv_pin_D13_GPIO)
 #define OMV_SPI_DISPLAY_RST_PIN               (&omv_pin_D12_GPIO)
 #define OMV_SPI_DISPLAY_BL_PIN                (&omv_pin_A5_GPIO)
-#define OMV_SPI_DISPLAY_TRIPLE_BUFFER         (1)
 
 // FIR Lepton
 #define OMV_FIR_LEPTON_I2C_BUS                (OMV_FIR_I2C_ID)
